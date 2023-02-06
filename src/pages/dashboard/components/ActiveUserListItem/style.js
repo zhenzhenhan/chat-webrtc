@@ -16,12 +16,17 @@ export const ActiveUserListItemWrapper = styled.div`
 
   .active_user_list_image_container {
     width: 60px;
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 30px;
+    margin-right: 30px;
   }
 
   .active_user_list_text {
     font-size: 24px;
+    margin-right: 30px;
+  }
+
+  .active_user_list_me {
+    font-size: 20px;
   }
 
   .active_user_list_image {

@@ -50,6 +50,17 @@ export const DashBoardWrapper = styled.div`
 
   .dashboard_active_users_list {
     height: 80%;
+
+    .active_users_title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      width: 100%;
+      height: 50px;
+      background-color: white;
+      color: #000;
+    }
   }
 
   .dashboard_logo_container {

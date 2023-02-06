@@ -18,10 +18,11 @@ const dashboard = memo(() => {
         </div>
         <div className="dashboard_right_section background_secondary_color">
           <div className="dashboard_active_users_list">
+            <div className="active_users_title">在线用户</div>
             <ActiveUserList />
           </div>
           <div className="dashboard_logo_container">
-            <img className="dashboard_logo_image" src={logo} />
+            <img className="dashboard_logo_image" src={logo} alt="" />
           </div>
         </div>
       </div>

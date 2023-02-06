@@ -4,13 +4,19 @@ import { useAtom } from 'jotai'
 import { usernameAtom } from '../../store'
 import logo from '../../assets/logo.png'
 import { LoginWrapper } from './style'
+// import useSocket from '@/utils/connection'
+import { registerNewUser } from '@/utils/connection'
 import UsernameInput from './components/UsernameInput'
 import SubmitButton from './components/SubmitButton'
 
 const login = memo(() => {
   const navigate = useNavigate()
   const [username, setUsername] = useAtom(usernameAtom)
+  // const { registerNewUser } = useSocket()
   const handleSubmitButtonPressed = () => {
+    // 注册新用户
+    registerNewUser(username)
+    // 跳转到dashboard页面
     navigate('/dashboard')
   }
 

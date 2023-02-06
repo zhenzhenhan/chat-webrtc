@@ -2,8 +2,9 @@ import React, { memo } from 'react'
 import { ActiveUserListItemWrapper } from './style'
 import userAvatar from '@/assets/userAvatar.png'
 
-const ActiveUserListItem = memo(({ activeUser }) => {
+const ActiveUserListItem = memo(({ activeUser, index }) => {
   const handleListItemPressed = () => {
+    if (index === 0) return
     // 点击直接呼叫
     console.log('handleListItemPressed')
   }
@@ -14,6 +15,7 @@ const ActiveUserListItem = memo(({ activeUser }) => {
           <img className="active_user_list_image" src={userAvatar} alt="" />
         </div>
         <span className="active_user_list_text">{activeUser.username}</span>
+        {index === 0 && <span className="active_user_list_me">我</span>}
       </div>
     </ActiveUserListItemWrapper>
   )
