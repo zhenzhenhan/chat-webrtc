@@ -1,15 +1,42 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 import logo from '../../assets/logo.png'
 import { useAtom } from 'jotai'
-import { usernameAtom } from '../../store'
+import { snackbarAtom, alertMessageAtom, alertSeverityAtom } from '@/store'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
 import { DashBoardWrapper } from './style'
 import ActiveUserList from './components/ActiveUserList'
+import useWebRtc from '@/hooks/useWebRtc'
 
 const dashboard = memo(() => {
-  const [username] = useAtom(usernameAtom)
+  const { getLocalStream } = useWebRtc()
+  const [snackbar, setSnackbar] = useAtom(snackbarAtom)
+  const [alertMessage] = useAtom(alertMessageAtom)
+  const [alertSeverity] = useAtom(alertSeverityAtom)
+
+  useEffect(() => {
+    // 获取本地流
+    getLocalStream()
+  }, [])
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setSnackbar(false)
+  }
   return (
     <DashBoardWrapper>
       <div className="dashboard_container background_main_color">
+        <Snackbar open={snackbar} autoHideDuration={3000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity={alertSeverity}
+            sx={{ width: '100%' }}
+          >
+            {alertMessage}
+          </Alert>
+        </Snackbar>
         <div className="dashboard_left_section">
           <div className="dashboard_content_container">内容</div>
           <div className="dashboard_rooms_container background_secondary_color ">
