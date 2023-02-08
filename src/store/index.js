@@ -5,6 +5,8 @@ import { randomUsername } from '../utils/username'
 export const usernameAtom = atom(randomUsername())
 export const activeUsersAtom = atom([])
 export const localStreamAtom = atom(null)
+export const remoteStreamAtom = atom(null)
 export const snackbarAtom = atom(false)
 export const alertMessageAtom = atom('')
 export const alertSeverityAtom = atom('success')
+export const callStateAtom = atom('CALL_UNAVAILABLE')

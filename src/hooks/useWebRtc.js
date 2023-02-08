@@ -5,6 +5,7 @@ import {
   snackbarAtom,
   alertMessageAtom,
   alertSeverityAtom,
+  callStateAtom,
 } from '@/store'
 
 const defaultConstrains = {
@@ -17,6 +18,7 @@ const useWebRtc = () => {
   const [, setAlertMessage] = useAtom(alertMessageAtom)
   const [, setAlertSeverity] = useAtom(alertSeverityAtom)
   const [, setLocalStream] = useAtom(localStreamAtom)
+  const [, setCallState] = useAtom(callStateAtom)
 
   const getLocalStream = () => {
     navigator.mediaDevices
@@ -26,6 +28,7 @@ const useWebRtc = () => {
         setAlertSeverity('success')
         setSnackbar(true)
         setLocalStream(stream)
+        setCallState('CALL_AVAILABLE')
       })
       .catch((error) => {
         setAlertMessage('获取本地流失败')
