@@ -1,10 +1,21 @@
 import socketClient from 'socket.io-client'
 import { useAtom } from 'jotai'
-import { activeUsersAtom } from '@/store'
+import {
+  activeUsersAtom,
+  comingCallAtom,
+  callStateAtom,
+  callUserNameAtom,
+  connectUserSocketIdAtom,
+} from '@/store'
 const ENDPOINT = 'http://localhost:9000'
 const socket = socketClient(ENDPOINT)
+
 const useSocket = () => {
   const [, setActiveUsers] = useAtom(activeUsersAtom)
+  const [, setComingCall] = useAtom(comingCallAtom)
+  const [, setCallState] = useAtom(callStateAtom)
+  const [, setCallUserName] = useAtom(callUserNameAtom)
+  const [, setConnectUserSocketId] = useAtom(connectUserSocketIdAtom)
   const connectWithSocket = () => {
     // 连接服务器
     socket.connect()
@@ -18,12 +29,14 @@ const useSocket = () => {
   const listenBroadcast = () => {
     socket.on('broadcast', (data) => {
       // 将活跃用户保存到store中
+      console.log(data)
       switch (data.type) {
         case 'ACTIVE_USERS':
           // 把自己放在第一位
           const me = data.activeUsers.filter(
             (item) => item.socketId === socket.id
           )
+          if (me.length === 0) return
           data.activeUsers = data.activeUsers.filter(
             (item) => item.socketId !== socket.id
           )
@@ -37,9 +50,29 @@ const useSocket = () => {
   }
 
   const registerNewUser = (username) => {
-    socket.emit('registerNewUser', {
+    const res = socket.emit('registerNewUser', {
       username,
       socketId: socket.id,
+    })
+    return res.connected
+  }
+
+  // 发送preOffer信令
+  const sendPreOffer = (data) => {
+    socket.emit('preOffer', data)
+  }
+
+  // 应答方监听preOffer信令
+  const listenPreOffer = () => {
+    socket.on('preOffer', (data) => {
+      console.log('preOffer', data)
+      // 设置弹窗显示
+      setComingCall(true)
+      // 设置来电信息
+      setCallState('CALL_REQUESTED')
+      setCallUserName(data.callerUsername)
+      // 设置连接用户的socketId
+      setConnectUserSocketId(data.callerSocketId)
     })
   }
 
@@ -56,6 +89,8 @@ const useSocket = () => {
     connectWithSocket,
     listenBroadcast,
     registerNewUser,
+    sendPreOffer,
+    listenPreOffer,
     disconnect,
     removeListener,
   }

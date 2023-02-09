@@ -28,7 +28,7 @@ const ActiveUserList = memo(() => {
   //   },
   // ]
   const [activeUserList] = useAtom(activeUsersAtom)
-  useEffect(() => {}, [])
+
   return (
     <ActiveUserListWrapper>
       <div className="active_user_list_container ">

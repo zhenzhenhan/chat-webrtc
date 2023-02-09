@@ -4,7 +4,6 @@ import { LocalVideoViewWrapper } from './style'
 const LocalVideoView = memo(({ localStream }) => {
   const localVideoRef = useRef(null)
   useEffect(() => {
-    console.log('localStream', localStream)
     if (localStream) {
       localVideoRef.current.srcObject = localStream
       // 元数据加载完成后，再播放视频

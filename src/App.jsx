@@ -5,13 +5,18 @@ import './App.css'
 import useSocket from '@/hooks/useSocket'
 
 function App() {
-  const { connectWithSocket, listenBroadcast, disconnect, removeListener } =
-    useSocket()
+  const {
+    connectWithSocket,
+    listenBroadcast,
+    listenPreOffer,
+    disconnect,
+    removeListener,
+  } = useSocket()
 
   useEffect(() => {
-    console.log('app')
     connectWithSocket()
     listenBroadcast()
+    listenPreOffer()
     return () => {
       disconnect()
       removeListener()

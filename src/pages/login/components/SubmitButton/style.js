@@ -22,4 +22,12 @@ export const SubmitButtonWrapper = styled.div`
     background-color: #8706f0;
     opacity: 0.5;
   }
+
+  .Mui-disabled {
+    background-color: #778899;
+  }
+
+  .MuiLoadingButton-loadingIndicator {
+    color: #5a9cf8;
+  }
 `
